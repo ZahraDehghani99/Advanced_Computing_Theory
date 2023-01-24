@@ -1,6 +1,5 @@
-input = list(map(int, input().split()))
-
 import math
+
 def calculat_left_side(n):
     x = (n & (~(n - 1)))
     return int(math.log10(x) /
@@ -50,3 +49,19 @@ def generate_instruction(a, b, c):
         inst = f"[{label_lst[a - 1]}]" + " " + inst
 
     return inst           
+
+def decode(code):
+    '''This function gets the code of the instruction as an input and decodes it to the instruction in language S.'''
+    code = code + 1
+    a, b_c = decode_pair_number(code)
+    b_c = b_c + 1
+    b, c = decode_pair_number(b_c) 
+    inst = generate_instruction(a, b, c)
+    return inst
+
+
+ 
+if __name__=='__main__':
+    input = list(map(int, input().split()))
+    for i in input:
+        print(decode(i))
