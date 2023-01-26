@@ -1,20 +1,20 @@
 import math
 
-def calculat_left_side(n):
+def calculate_left_side(n):
     x = (n & (~(n - 1)))
     return int(math.log10(x) /
             math.log10(2))  
 
-def calculat_right_side(n):
-    power_of_2 = calculat_left_side(n)
+def calculate_right_side(n):
+    power_of_2 = calculate_left_side(n)
     m = ((n//(2**power_of_2)) - 1)//2
     return m
 
 def decode_pair_number(n):
     '''This function get the code of pair number as an input and then decode it based on
     following formula : 2^x(2y+1) - 1'''
-    left_side = calculat_left_side(n)
-    right_side = calculat_right_side(n)
+    left_side = calculate_left_side(n)
+    right_side = calculate_right_side(n)
     return left_side, right_side
 
 def create_var_lst(c):
