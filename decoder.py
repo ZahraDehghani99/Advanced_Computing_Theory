@@ -56,7 +56,7 @@ def generate_instruction(a, b, c):
 
     return inst           
 
-def decode(code):
+def decoder(code):
     '''This function gets the code of the instruction as an input and decodes it to the instruction in language S.'''
     a, b_c = decode_pair_number(code)
     b, c = decode_pair_number(b_c) 
