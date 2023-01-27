@@ -67,4 +67,4 @@ def decoder(code):
 if __name__=='__main__':
     input = list(map(int, input().split()))
     for i in input:
-        print(decode(i))
+        print(decoder(i))

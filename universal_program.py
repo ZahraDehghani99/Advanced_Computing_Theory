@@ -1,39 +1,38 @@
 import math
 
 def calculate_left_side(n):
+    '''calculate the largest number (e.g. x) that n is divisible by 2^x'''
     x = (n & (~(n - 1)))
-    return int(math.log10(x) /
-            math.log10(2))  
-
+    return int(math.log10(x) / math.log10(2))  
 
 def calculate_right_side(n):
+    '''calculate another side of code based on the value of left side'''
     power_of_2 = calculate_left_side(n)
     m = ((n//(2**power_of_2)) - 1)//2
     return m
 
 
 def decode_pair_number(n):
-    '''This function get the code of pair number as an input and then decode it based on
-    following formula : 2^x(2y+1) - 1'''
+    '''This function get the code of pair number (n = <x, y>) as an input and then decode it based on the
+    following formula : <x, y> = 2^x(2y+1) - 1'''
+    n = n + 1
     left_side = calculate_left_side(n)
     right_side = calculate_right_side(n)
     return left_side, right_side
+  
+
+def decode_instruction(code):
+    '''find a, b and c from instruction code.'''
+    a, b_c = decode_pair_number(code)
+    b, c = decode_pair_number(b_c) 
+    return a, b, c
 
 
 def create_var_lst(c):
     var_lst = ["Y"]
     for i in range(math.floor((c+1)/2)):
         var_lst.extend([f"X{i+1}", f"Z{i+1}"])
-    return var_lst    
-
-
-def decode_instruction(code):
-    '''find a, b and c from instruction code.'''
-    code = code + 1
-    a, b_c = decode_pair_number(code)
-    b_c = b_c + 1
-    b, c = decode_pair_number(b_c) 
-    return a, b, c
+    return var_lst  
 
 
 def create_var_lst_of_program(code_list):
@@ -52,8 +51,11 @@ def initial_values(var_lst, input_vairiables):
     var_value_dict = {}
     for var in var_lst:
         var_value_dict[var] = 0
-    for i in range(len(input_vairiables)):
-        var_value_dict[var_lst[2*i + 1]] = input_vairiables[i]   
+    try:    
+        for i in range(len(input_vairiables)):
+            var_value_dict[var_lst[2*i + 1]] = input_vairiables[i]   
+    except IndexError:
+        pass    
     return var_value_dict     
 
 
@@ -126,6 +128,7 @@ def nth_prime(n):
 
 
 def prime_factorization(n, p):
+    '''fuction which get number n and prime number p as inputs and gives exponent of p in n.'''
     primfac = []
     d = 2
     while d*d <= n:
@@ -161,7 +164,7 @@ def universal_program(instruction_codes, input_vairiables):
         print(output_format(K, decode_state(S, var_values_dict, var_lst), used_var_lst))
         U = calculate_right_side(Z[K-1] + 1) # <b, c> 
         c = calculate_right_side(U + 1)
-        P = nth_prime(calculate_right_side(U + 1) + 1)
+        P = nth_prime(c + 1)
         b = calculate_left_side(U + 1)
 
         if b == 0:
