@@ -1,6 +1,4 @@
 # Advanced_Computing_Theory
-Advanced computing theory course project of University of Tehran (Master degree)
-
 Decoder and universal program in Davis language (S language) (Ch4 Davis, seconde edition)
 
 ## Decoder
